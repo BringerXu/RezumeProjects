@@ -1,0 +1,48 @@
+# Setup
+c-->from importlib import reload
+c-->import q1solution
+c-->reload(q1solution)
+c-->from q1solution import err, rank, who, by_job, scramble, longest_match 
+
+# Test err
+c-->f = err(lambda x : x, .01)
+e-->[f(x) for x in irange(-1,1)]-->[(-1.01, -0.99), (0.0, 0.0), (0.99, 1.01)]
+c-->f = err(lambda x : x**2 -2.5 , .1)
+e-->[f(2*x) for x in irange(0,2)]-->[(-2.75, -2.25), (1.35, 1.6500000000000001), (12.15, 14.850000000000001)]
+
+# Test rank
+c-->db = {'Adam': {}, 'Betty': {('Gardening', 2), ('Tutoring', 1), ('Cleaning',3)}, 'Charles': {('Plumbing', 2),  ('Cleaning', 5)}, 'Diane': {('Laundry', 2),   ('Cleaning', 4), ('Gardening', 3)}}
+c-->answer = rank(db)
+e-->set(answer)==set(db) and all(len(db[p1]) >= len(db[p2]) for p1,p2 in zip(answer,answer[1:]))-->True 
+c-->db = {'Adam': {('Cleaning', 4),  ('Tutoring', 2), ('Baking', 1)}, 'Betty': {('Gardening', 2), ('Tutoring', 1), ('Cleaning',3)}, 'Charles': {('Plumbing', 2),  ('Cleaning', 5)}, 'Diane':   {('Laundry', 2),   ('Cleaning', 4), ('Gardening', 3)}}
+c-->answer = rank(db)
+e-->set(answer)==set(db) and all(len(db[p1]) >= len(db[p2]) for p1,p2 in zip(answer,answer[1:]))-->True 
+
+# Test who
+c-->db = {'Adam': {('Cleaning', 4),  ('Tutoring', 2), ('Baking', 1)}, 'Betty': {('Gardening', 2), ('Tutoring', 1), ('Cleaning',3)}, 'Charles': {('Plumbing', 2),  ('Cleaning', 5)}, 'Diane':   {('Laundry', 2),   ('Cleaning', 4), ('Gardening', 3)}}
+e-->who(db,'Cleaning' ,4)-->[('Charles', 5), ('Adam', 4), ('Diane', 4)]
+e-->who(db,'Gardening',0)-->[('Diane', 3), ('Betty', 2)]
+e-->who(db,'Tutoring', 3)-->[]
+e-->who(db,'Gambling', 0)-->[]
+^-->who(db,'Gambline','x')-->AssertionError
+^-->who(db,'Gambline',-1)-->AssertionError
+
+# Test by_job
+c-->db = {'Adam': {}, 'Betty': {('Cleaning', 4),  ('Tutoring', 2), ('Baking', 1)}, 'Charles': {('Laundry', 2)},'Diane': {('Gardening', 2), ('Tutoring', 1)}}
+==-->by_job(db)-->{'Cleaning': {('Betty', 4)}, 'Tutoring': {('Diane', 1), ('Betty', 2)}, 'Baking': {('Betty', 1)}, 'Laundry': {('Charles', 2)}, 'Gardening': {('Diane', 2)}}
+c-->db = {'Adam': {('Cleaning', 4),  ('Tutoring', 2), ('Baking', 1)}, 'Betty': {('Gardening', 2), ('Tutoring', 1), ('Cleaning',3)}, 'Charles': {('Plumbing', 2),  ('Cleaning', 5)}, 'Diane':   {('Laundry', 2),   ('Cleaning', 4), ('Gardening', 3)}}
+==-->by_job(db)-->{'Cleaning': {('Betty', 3), ('Charles', 5), ('Diane', 4), ('Adam', 4)}, 'Tutoring': {('Adam', 2), ('Betty', 1)}, 'Baking': {('Adam', 1)}, 'Gardening': {('Diane', 3), ('Betty', 2)}, 'Plumbing': {('Charles', 2)}, 'Laundry': {('Diane', 2)}}
+
+# Test scramble
+e-->scramble(['abc', 'bac', 'abb'], 'abc')-->['abb', 'abc', 'bac']
+e-->scramble(['abc', 'bac', 'abb'], 'cba')-->['bac', 'abc', 'abb']
+e-->scramble(['amobea', 'ambian', 'amount', 'amgen'], 'abcdefghijklmnopqrstuvwxyz')-->['ambian', 'amgen', 'amobea', 'amount']
+e-->scramble(['amobea', 'ambian', 'amount', 'amgen'], 'zyxwvutsrqponmlkjihgfedcba')-->['amount', 'amobea', 'amgen', 'ambian']
+e-->scramble(['amobea', 'ambian', 'amount', 'amgen'], 'gbomzftrpjxqycdewvlknisuha')-->['amgen', 'ambian', 'amobea', 'amount']
+
+# Test longest_match
+e-->longest_match('accgt','a')-->(0, 1)
+e-->longest_match('accgt','ccg')-->(1, 3)
+e-->longest_match('accgt','at')-->(0, 1)
+e-->longest_match('accgt','ccgt')-->(1, 4)
+e-->longest_match('accgt','x')-->(0, 0)

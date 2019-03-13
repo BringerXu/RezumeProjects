@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" action="mailto:zhengyix@uci.edu">
+        <h2>Bookstore Survey at the top of the page</h2>
+        <p>First name:<input type="text" name="firstname"/></p>
+        <p>Last name:<input type="text" name="lastname"/></p>
+        <p>Address:<input type="text" name="address"/></p>
+        <p>City:<input type="text" name="city"/></p>
+        <p>State:<input type="text" name="state"/></p>
+        <p>Zip:<input type="text" name="zip"/></p>
+        <p>E-mail address:<input type="text" name="email"/></p>
+        <hr>
+        <p>Have you purchased books in campus bookstores? <input type="radio" name="YN" value="yes"/>Yes <input type="radio" name="YN" value="no"/>No</p>
+        <p>In which bookstore do you usually shop? 
+            <select name="bookyoushop">
+                <option>Arnie's Books</option>
+                <option>Adam's Books</option>
+                <option>Edison's Books</option>
+            </select>
+        </p>
+        <p>
+            Have you ever purchased books on the internet? <input type="radio" name="YN2" value="yes"/>Yes <input type="radio" name="YN2" value="no"/>No
+        </p>
+        <p>
+            How does shopping on the internet compare to shopping in a campus bookstore? <br>
+            <textarea name="compare" cols="100" rows="20"></textarea>
+        </p>
+        <input type="submit" value="Submit"/>
+        <input type="reset" value="Reset"/>
+    </form>
+</body>
+</html>

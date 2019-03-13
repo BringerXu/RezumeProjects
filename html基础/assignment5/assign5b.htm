@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p style="text-align:center"><img src="Music_clef_sm.png" alt="music_clef"> <img src="Music_clef_sm.png" alt="music_clef"> <img src="Music_clef_sm.png" alt="music_clef"> 
+        <img src="Music_clef_sm.png" alt="music_clef"> <img src="Music_clef_sm.png" alt="music_clef"></p>
+    <p style="text-align:center;font-size:20pt">Penelope's Music House&reg; Survey</p>
+    <p style="text-align:center;font-size:5pt">Please complete the survey and click submit when finished</p>
+    <form method="post" action="mailto:zhengyix@uci.edu">
+        <fieldset>
+            <p>Last Name: <input type="text" name="lastname"> First Name: <input type="text" name="firstname"> E-mail address: <input type="text" name="email"></p>
+            <p>Do you currently take music lessons? <input type="radio" name="YN" value="yes"/>Yes <input type="radio" name="YN" value="no"/>No</p>
+            <p>What instrument do you play? 
+                <input type="checkbox" value="piano">Piano
+                <input type="checkbox" value="violin">Violin
+                <input type="checkbox" value="cello">Cello
+                <input type="checkbox" value="drums">Drums
+                <input type="checkbox" value="opera">Opera
+                <input type="checkbox" value="ethnic">Ethnic
+            </p>
+            <p>How often a week do you practice?<br>
+                <select multiple name="practicefreq">
+                    <option>30 minutes a week</option>
+                    <option>30 minutes a day</option>
+                    <option>one hour a week</option>
+                </select>
+            </p>
+            <p>What other instruments would you like to learn?<br>
+                <textarea name="other"cols="30" rows="10"></textarea>
+            </p>
+        </fieldset>
+        <input type="submit" value="Submit"/>
+        <input type="reset" value="Reset"/><br>
+        Thank you for your input.
+    </form>
+</body>
+</html>

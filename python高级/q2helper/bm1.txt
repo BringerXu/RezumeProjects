@@ -1,0 +1,12 @@
+x
+x and x
+x, x, and x
+x, x, x, and x
+x, x, x, x, x, x, x, x, x, x, x, x, and x
+Above should match; below should not (and of course, not this line)
+xx
+x,x
+x, x
+x and x and x
+xandx
+x, x and x

@@ -1,0 +1,84 @@
+# Setup
+c-->from importlib import reload
+c-->import q2solution
+c-->reload(q2solution)
+c-->from q2solution import multi_compare, expand_re
+c-->import re
+
+# Read/Test Regular Expression Patterns (read from repattern files)
+c-->p1 = open('repattern1.txt').read().rstrip()
+c-->print('   ...Testing the pattern p1: ',p1)
+
+# The following text should match the pattern
+!=-->re.match(p1,'x')-->None
+!=-->re.match(p1,'x and x')-->None
+!=-->re.match(p1,'x, x, and x')-->None
+!=-->re.match(p1,'x, x, x, and x')-->None
+!=-->re.match(p1,'x, x, x, x, x, x, x, x, x, x, x, x, and x')-->None
+
+# The following text should NOT match the pattern
+==-->re.match(p1,'xx')-->None
+==-->re.match(p1,'x,x')-->None
+==-->re.match(p1,'x, x')-->None
+==-->re.match(p1,'x and x and x')-->None
+==-->re.match(p1,'xandx')-->None
+==-->re.match(p1,'x, x and x')-->None
+
+# Read/Test Regular Expression Patterns (read from repattern files)
+c-->p2a = open('repattern2a.txt').read().rstrip()
+c-->print('   ...Testing the pattern p2a: ',p2a)
+
+# The following text should match the pattern
+!=-->re.match(p2a,'0')-->None
+!=-->re.match(p2a,'5')-->None
+!=-->re.match(p2a,'5.0')-->None
+!=-->re.match(p2a,'5.2x10^31')-->None
+!=-->re.match(p2a,'5.2x10^-31')-->None
+!=-->re.match(p2a,'5.2x10^+31')-->None
+!=-->re.match(p2a,'-5.2x10^-31')-->None
+!=-->re.match(p2a,'+5.2x10^+31')-->None
+
+# The following text should NOT match the pattern
+==-->re.match(p2a,'0.5')-->None
+==-->re.match(p2a,'15.2')-->None
+==-->re.match(p2a,'0.0x10^5')-->None
+==-->re.match(p2a,'0.0x10^5')-->None
+==-->re.match(p2a,'5.3x10^02')-->None
+==-->re.match(p2a,'5.3x10^2.0')-->None
+
+# Read/Test Regular Expression Patterns (read from repattern files)
+c-->p2b = open('repattern2b.txt').read().rstrip()
+c-->print('   ...Testing the pattern p2b: ',p2b)
+
+# The following text should match the pattern, and provide the shown groups
+==-->re.match(p2b,'0').groups()-->(None, None, None)
+==-->re.match(p2b,'5').groups()-->(None, '5', None)
+==-->re.match(p2b,'5.0').groups()-->(None, '5.0', None)
+==-->re.match(p2b,'5.2x10^31').groups()-->(None, '5.2', '31')
+==-->re.match(p2b,'5.2x10^-31').groups()-->(None, '5.2', '-31')
+==-->re.match(p2b,'5.2x10^+31').groups()-->(None, '5.2', '+31')
+==-->re.match(p2b,'-5.2x10^-31').groups()-->('-', '5.2', '-31')
+==-->re.match(p2b,'+5.2x10^+31').groups()-->('+', '5.2', '+31')
+
+# The following text should NOT match the pattern
+==-->re.match(p2b,'0.5')-->None
+==-->re.match(p2b,'15.2')-->None
+==-->re.match(p2b,'0.0x10^5')-->None
+==-->re.match(p2b,'0.0x10^5')-->None
+==-->re.match(p2b,'5.3x10^02')-->None
+==-->re.match(p2b,'5.3x10^2.0')-->None
+
+# Test multi_search
+e-->multi_compare(open('pats1.txt'),open('texts1a.txt'),open('texts1b.txt'))-->[(2, '!aaab', '666b6'), (3, 'ambulance7', '7a')]
+e-->multi_compare(open('pats2.txt'),open('texts2a.txt'),open('texts2b.txt'))-->[(9, 'ambulatory', 'amoeba7'), (10, 'y18', 'amoeba'), (11, 'loopy', 'x17'), (12, '4b17', 'iffy'), (13, '!aaab', '666b6'), (14, '()*((^^%23', '6bbb'), (15, '5xxx', '*&(*&6'), (16, 'ambulance7', '7a')]
+
+# Testing expand_re
+c-->pd = dict(dig=r'\d', integer=r'[=-]?#dig##dig#*')
+c-->expand_re(pd)
+==-->dict(pd.items())-->{'dig': '\\d', 'integer': '[=-]?(\\d)(\\d)*'}
+c-->pd = dict(int=r'[+-]?\d+', integer_range =r'#int#(..#int#)?', integer_list  =r'#integer_range#(?,#integer_range#)*', integer_set =r'{#integer_list#?}')
+c-->expand_re(pd)
+==-->dict(pd.items())-->{'int' : '[+-]?\\d+', 'integer_range': '([+-]?\\d+)(..([+-]?\\d+))?', 'integer_list' : '(([+-]?\\d+)(..([+-]?\\d+))?)(?,(([+-]?\\d+)(..([+-]?\\d+))?))*','integer_set'  : '{((([+-]?\\d+)(..([+-]?\\d+))?)(?,(([+-]?\\d+)(..([+-]?\\d+))?))*)?}'}
+c-->pd = pd = dict(alpha='correct',b='#alpha#',c='#b#',d='#c#',e='#d#',f='#e#',g='#f#')
+c-->expand_re(pd)
+==-->dict(pd.items())-->{'d': '(((correct)))', 'c': '((correct))', 'b': '(correct)','alpha': 'correct', 'g': '((((((correct))))))', 'f': '(((((correct)))))','e': '((((correct))))'}

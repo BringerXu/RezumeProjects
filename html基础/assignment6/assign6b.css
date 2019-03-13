@@ -1,0 +1,16 @@
+p
+{
+    margin-left: 2.54cm;
+    margin-right: 2.54cm
+}
+
+a
+{
+    color:red;
+    text-decoration: none;
+}
+
+p::first-letter
+{
+    font-size:300%;
+}
